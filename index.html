@@ -1,113 +1,123 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dolaşım Sistemi Hastalıkları – Hemşirelik Ödevi</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background: #8b0000;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 24px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 30px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        }
-        h2 {
-            color: #8b0000;
-        }
-        .risk-box {
-            background: #fff7e6;
-            padding: 15px;
-            border-left: 5px solid #ff9900;
-            margin-bottom: 20px;
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: white;
-            background: #8b0000;
-            margin-top: 40px;
-        }
-        img {
-            width: 180px;
-            display: block;
-            margin: 20px auto;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kalp Hastalığı Risk Hesaplama</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f7f7f7; padding:20px; }
+    .container { max-width:700px; margin:auto; background:white; padding:20px; border-radius:12px; box-shadow:0 0 10px rgba(0,0,0,0.1);} 
+    h1 { text-align:center; margin-bottom:20px; }
+    label { display:block; margin-top:12px; font-weight:bold; }
+    input, select { width:100%; padding:8px; margin-top:5px; border-radius:6px; border:1px solid #ccc; }
+    button { margin-top:20px; width:100%; padding:12px; background:#c0392b; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer; }
+    #result { margin-top:25px; padding:15px; background:#ecf0f1; border-radius:8px; }
+    #qrcode { margin-top:30px; text-align:center; }
+  </style>
 </head>
 <body>
-
-<header>Dolaşım Sistemi Hastalıkları – Hemşirelik Projesi</header>
-
 <div class="container">
+  <h1>Kalp Hastalığı Risk Hesaplama</h1>
 
-    <h2>1️⃣ Dolaşım Sistemi Hastalıkları Nelerdir?</h2>
-    <p>Bu bölümde hipertansiyon, kalp yetmezliği, koroner arter hastalığı ve aritmi gibi temel hastalıklar açıklanmaktadır.</p>
+  <label>Yaş</label>
+  <input type="number" id="age" />
 
-    <h2>2️⃣ Hastalıkların Nedenleri</h2>
-    <ul>
-        <li>Genetik faktörler</li>
-        <li>Sigara ve alkol kullanımı</li>
-        <li>Hareketsiz yaşam tarzı</li>
-        <li>Obezite</li>
-        <li>Yüksek kolesterol</li>
-    </ul>
+  <label>Cinsiyet</label>
+  <select id="gender">
+    <option value="kadın">Kadın</option>
+    <option value="erkek">Erkek</option>
+  </select>
 
-    <h2>3️⃣ Klinik Belirtiler</h2>
-    <ul>
-        <li>Göğüs ağrısı</li>
-        <li>Nefes darlığı</li>
-        <li>Bayılma</li>
-        <li>Yorgunluk</li>
-        <li>Ödem</li>
-    </ul>
+  <label>Kilo (kg)</label>
+  <input type="number" id="weight" />
 
-    <h2>4️⃣ Hemşirelik Bakımı</h2>
-    <p>Hasta eğitimi, yaşam tarzı düzenlemeleri, ilaç takibi, vital bulgu izleme gibi bakım adımlarını içerir.</p>
+  <label>Sigara Kullanıyor musunuz?</label>
+  <select id="smoke">
+    <option value="0">Hayır</option>
+    <option value="1">Evet</option>
+  </select>
 
-    <h2>5️⃣ Risk Grupları ve Önleme Önerileri</h2>
+  <label>Alkol Kullanıyor musunuz?</label>
+  <select id="alcohol">
+    <option value="0">Hayır</option>
+    <option value="1">Evet</option>
+  </select>
 
-    <div class="risk-box">
-        <h3>⚪ Düşük Risk</h3>
-        <p>Düzenli egzersiz yapan, sigara içmeyen, tansiyonu normal kişiler.</p>
-        <strong>Öneri:</strong> Sağlıklı yaşam tarzına devam et.
-    </div>
+  <label>Diyabet Var mı?</label>
+  <select id="diabetes">
+    <option value="0">Hayır</option>
+    <option value="1">Evet</option>
+  </select>
 
-    <div class="risk-box">
-        <h3>🟡 Orta Risk</h3>
-        <p>Az hareket eden, ailesinde kalp hastalığı olan, dönemsel tansiyon yüksekliği görülen kişiler.</p>
-        <strong>Öneri:</strong> Haftada en az 150 dk yürüyüş, tuz azaltma.
-    </div>
+  <label>Hipertansiyon Var mı?</label>
+  <select id="ht">
+    <option value="0">Hayır</option>
+    <option value="1">Evet</option>
+  </select>
 
-    <div class="risk-box">
-        <h3>🔴 Yüksek Risk</h3>
-        <p>Hipertansiyon, diyabet, obezite veya sigara kullanımı olan kişiler.</p>
-        <strong>Öneri:</strong> Sigara bırakma, kilosu düzenleme, ilaç uyumu, hekim takipleri.
-    </div>
+  <label>Anemi Var mı?</label>
+  <select id="anemia">
+    <option value="0">Hayır</option>
+    <option value="1">Evet</option>
+  </select>
 
-    <h2>📌 Proje QR Kodu</h2>
-    <p>Aşağıdaki QR kodu taratarak proje sayfasına ulaşabilirsiniz.</p>
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://yourgithuburl.com" alt="QR Kod">
+  <label>Günlük Egzersiz Süresi</label>
+  <select id="exercise">
+    <option value="0">Yok</option>
+    <option value="1">15 dk</option>
+    <option value="2">30 dk</option>
+    <option value="3">60 dk</option>
+  </select>
 
+  <button onclick="calculateRisk()">Riski Hesapla</button>
+
+  <div id="result"></div>
+
+  <div id="qrcode"></div>
 </div>
 
-<footer>
-    Hemşirelik Dolaşım Sistemi Projesi – Rabia Kaya
-</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+function calculateRisk() {
+  let risk = 0;
+  let age = Number(document.getElementById("age").value);
+  let weight = Number(document.getElementById("weight").value);
+  let smoke = Number(document.getElementById("smoke").value);
+  let alcohol = Number(document.getElementById("alcohol").value);
+  let diabetes = Number(document.getElementById("diabetes").value);
+  let ht = Number(document.getElementById("ht").value);
+  let anemia = Number(document.getElementById("anemia").value);
+  let exercise = Number(document.getElementById("exercise").value);
+
+  if (age > 50) risk += 20;
+  if (smoke === 1) risk += 25;
+  if (alcohol === 1) risk += 15;
+  if (diabetes === 1) risk += 20;
+  if (ht === 1) risk += 20;
+  if (anemia === 1) risk += 10;
+  if (exercise === 0) risk += 15;
+
+  let level = "";
+  let rec = "";
+
+  if (risk < 25) {
+    level = "DÜŞÜK RİSK";
+    rec = "Akdeniz tipi beslenmeli, 30 dk egzersiz eklemeli, kaliteli uyku (8 saat) alışkanlığı kazanmalısınız.";
+  } else if (risk < 55) {
+    level = "ORTA RİSK";
+    rec = "Doymuş yağlardan kaçınmalı, sigara içiyorsanız Yeşilay'a başvurmalı, alkolü bırakmalı, 30–60 dk egzersiz eklemelisiniz.";
+  } else {
+    level = "YÜKSEK RİSK";
+    rec = "Tansiyonunuzu düzenli ölçmeli, ilaçlarınızı aksatmamalı, diyabet kontrolüne gitmeli, acilen yaşam tarzınızı düzenlemelisiniz.";
+  }
+
+  document.getElementById("result").innerHTML = `<h3>${level}</h3><p>Risk Yüzdesi: %${risk}</p><p><b>Öneriler:</b> ${rec}</p>`;
+
+  document.getElementById("qrcode").innerHTML = "";
+  new QRCode(document.getElementById("qrcode"), "https://kayarabia526-maker.github.io/hemsirelikproje/");
+}
+</script>
 
 </body>
 </html>
