@@ -1,127 +1,175 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kalp Hastalığı Risk Hesaplama</title>
-  <style>
-    body { font-family: Arial, sans-serif; background:#f7f7f7; padding:20px; }
-    .container { max-width:700px; margin:auto; background:white; padding:20px; border-radius:12px; box-shadow:0 0 10px rgba(0,0,0,0.1);} 
-    h1 { text-align:center; margin-bottom:20px; }
-    label { display:block; margin-top:12px; font-weight:bold; }
-    input, select { width:100%; padding:8px; margin-top:5px; border-radius:6px; border:1px solid #ccc; }
-    button { margin-top:20px; width:100%; padding:12px; background:#c0392b; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer; }
-    #result { margin-top:25px; padding:15px; background:#ecf0f1; border-radius:8px; }
-    #qrcode { margin-top:30px; text-align:center; }
-  </style>
+<meta charset="UTF-8">
+<title>Kalp Hastalığı Risk Hesaplama</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f4f6f7;
+  padding:20px;
+}
+.container{
+  max-width:750px;
+  margin:auto;
+  background:#ffffff;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+label{
+  font-weight:bold;
+  margin-top:12px;
+  display:block;
+}
+input, select{
+  width:100%;
+  padding:8px;
+  margin-top:5px;
+}
+button{
+  margin-top:20px;
+  width:100%;
+  padding:12px;
+  background:#b30000;
+  color:white;
+  border:none;
+  border-radius:8px;
+  font-size:16px;
+}
+.risk-box{
+  margin-top:25px;
+  padding:15px;
+  border-radius:10px;
+}
+.low{
+  background:#e8f5e9;
+  border-left:8px solid #2e7d32;
+}
+.mid{
+  background:#fff8e1;
+  border-left:8px solid #f9a825;
+}
+.high{
+  background:#ffebee;
+  border-left:8px solid #c62828;
+}
+</style>
 </head>
+
 <body>
 <div class="container">
-  <h1>Kalp Hastalığı Risk Hesaplama</h1>
+<h2>Kalp Hastalığı Risk Değerlendirme</h2>
 
-  <label>Yaş</label>
-  <input type="number" id="age" />
+<label>Yaş</label>
+<input id="age" type="number">
 
-  <label>Cinsiyet</label>
-  <select id="gender">
-    <option value="kadın">Kadın</option>
-    <option value="erkek">Erkek</option>
-  </select>
+<label>Cinsiyet</label>
+<select id="gender">
+  <option>Kadın</option>
+  <option>Erkek</option>
+</select>
 
-  <label>Kilo (kg)</label>
-  <input type="number" id="weight" />
+<label>Sigara Kullanımı</label>
+<select id="smoke">
+  <option value="0">Hayır</option>
+  <option value="1">Evet</option>
+</select>
 
-  <label>Sigara Kullanıyor musunuz?</label>
-  <select id="smoke">
-    <option value="0">Hayır</option>
-    <option value="1">Evet</option>
-  </select>
+<label>Alkol Kullanımı</label>
+<select id="alcohol">
+  <option value="0">Hayır</option>
+  <option value="1">Evet</option>
+</select>
 
-  <label>Alkol Kullanıyor musunuz?</label>
-  <select id="alcohol">
-    <option value="0">Hayır</option>
-    <option value="1">Evet</option>
-  </select>
+<label>Diyabet</label>
+<select id="dm">
+  <option value="0">Hayır</option>
+  <option value="1">Evet</option>
+</select>
 
-  <label>Diyabet Var mı?</label>
-  <select id="diabetes">
-    <option value="0">Hayır</option>
-    <option value="1">Evet</option>
-  </select>
+<label>Hipertansiyon</label>
+<select id="ht">
+  <option value="0">Hayır</option>
+  <option value="1">Evet</option>
+</select>
 
-  <label>Hipertansiyon Var mı?</label>
-  <select id="ht">
-    <option value="0">Hayır</option>
-    <option value="1">Evet</option>
-  </select>
+<button onclick="hesapla()">Riski Hesapla</button>
 
-  <label>Anemi Var mı?</label>
-  <select id="anemia">
-    <option value="0">Hayır</option>
-    <option value="1">Evet</option>
-  </select>
-
-  <label>Günlük Egzersiz Süresi</label>
-  <select id="exercise">
-    <option value="0">Yok</option>
-    <option value="1">15 dk</option>
-    <option value="2">30 dk</option>
-    <option value="3">60 dk</option>
-  </select>
-
-  <button onclick="calculateRisk()">Riski Hesapla</button>
-
-  <div id="result"></div>
-
-  <div id="qrcode"></div>
+<div id="sonuc"></div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
 <script>
-function calculateRisk() {
+function hesapla(){
   let risk = 0;
-  let age = Number(document.getElementById("age").value);
-  let weight = Number(document.getElementById("weight").value);
-  let smoke = Number(document.getElementById("smoke").value);
-  let alcohol = Number(document.getElementById("alcohol").value);
-  let diabetes = Number(document.getElementById("diabetes").value);
-  let ht = Number(document.getElementById("ht").value);
-  let anemia = Number(document.getElementById("anemia").value);
-  let exercise = Number(document.getElementById("exercise").value);
 
-  if (age > 50) risk += 20;
-  if (smoke === 1) risk += 25;
-  if (alcohol === 1) risk += 15;
-  if (diabetes === 1) risk += 20;
-  if (ht === 1) risk += 20;
-  if (anemia === 1) risk += 10;
-  if (exercise === 0) risk += 15;
+  if(age.value > 50) risk += 20;
+  if(smoke.value == 1) risk += 25;
+  if(alcohol.value == 1) risk += 15;
+  if(dm.value == 1) risk += 20;
+  if(ht.value == 1) risk += 20;
 
-  let level = "";
-  let rec = "";
+  let sonucHTML = "";
 
-  if (risk < 25) {
-    level = "DÜŞÜK RİSK";
-    rec = "Akdeniz tipi beslenmeli, günlük 30 dk egzersiz eklenmeli, kaliteli uyku (günlük 8 saat) alışkanlığı kazanmalısınız, kan basıncını düzenli aralıklarla ölçünüz.
-
-Kan şekeri ve kolesterol düzeylerini izleyiniz.
-
-Vücut kitle indeksi ve bel çevresi ölçümlerini yapınız.
-
-Elde edilen sonuçları kayıt altına alınız..";
-  } else if (risk < 55) {
-    level = "ORTA RİSK";
-    rec = "Doymuş yağlardan kaçınmalı, sigara içiyorsanız Yeşilay'a başvurmalı, alkolü bırakmalı, 30–60 dk egzersiz eklemelisiniz.";
-  } else {
-    level = "YÜKSEK RİSK";
-    rec = "Tansiyonunuzu düzenli ölçmeli, ilaçlarınızı aksatmamalı, diyabet kontrolüne gitmeli, acilen yaşam tarzınızı düzenlemelisiniz.";
+  if(risk < 30){
+    sonucHTML = `
+    <div class="risk-box low">
+      <h3>DÜŞÜK RİSK (%${risk})</h3>
+      <b>Hemşirelik Tanıları:</b>
+      <ul>
+        <li>Sağlığı sürdürmede yeterlilik</li>
+      </ul>
+      <b>Risk Önleme Önerileri:</b>
+      <ul>
+        <li>Akdeniz tipi beslenmelisiniz.</li>
+        <li>Doymuş yağlardan ve fast foodlardan kaçınmalısınız.</li>
+        <li>Günlük yaşantınıza en az 30 dakikalık yürüyüş eklemelisiniz.</li>
+        <li>Her gece ortalama 8 saat uyumalısınız.</li>
+      </ul>
+    </div>`;
+  }
+  else if(risk < 60){
+    sonucHTML = `
+    <div class="risk-box mid">
+      <h3>ORTA RİSK (%${risk})</h3>
+      <b>Hemşirelik Tanıları:</b>
+      <ul>
+        <li>Sağlığı sürdürmede yetersizlik riski</li>
+      </ul>
+      <b>Risk Önleme Önerileri:</b>
+      <ul>
+        <li>Akdeniz tipi beslenmeye geçmelisiniz.</li>
+        <li>Doymuş yağ ve işlenmiş gıdalardan kaçınmalısınız.</li>
+        <li>Sigara kullanıyorsanız bırakmak için Yeşilay’a başvurabilirsiniz.</li>
+        <li>Günlük yaşantınıza en az 30 dakikalık egzersiz eklemelisiniz.</li>
+        <li>Alkol tüketmemelisiniz.</li>
+        <li>Uyku düzeninize dikkat etmelisiniz.</li>
+      </ul>
+    </div>`;
+  }
+  else{
+    sonucHTML = `
+    <div class="risk-box high">
+      <h3>YÜKSEK RİSK (%${risk})</h3>
+      <b>Hemşirelik Tanıları:</b>
+      <ul>
+        <li>Etkisiz sağlık yönetimi</li>
+        <li>Kardiyak debide azalma riski</li>
+      </ul>
+      <b>Risk Önleme Önerileri:</b>
+      <ul>
+        <li>Akdeniz tipi beslenmeli ve tuz tüketimini azaltmalısınız.</li>
+        <li>Sigara ve alkolü tamamen bırakmalısınız.</li>
+        <li>Tansiyon hastasıysanız tansiyonunuzu düzenli ölçmeli ve ilaçlarınızı aksatmamalısınız.</li>
+        <li>Diyabetiniz varsa ilaçlarınızı düzenli kullanmalı ve doktor kontrollerini aksatmamalısınız.</li>
+        <li>Hekim önerisine uygun egzersiz yapmalısınız.</li>
+        <li>Her gece en az 8 saat uyumalısınız.</li>
+      </ul>
+    </div>`;
   }
 
-  document.getElementById("result").innerHTML = `<h3>${level}</h3><p>Risk Yüzdesi: %${risk}</p><p><b>Öneriler:</b> ${rec}</p>`;
-
-  document.getElementById("qrcode").innerHTML = "";
-  new QRCode(document.getElementById("qrcode"), "https://kayarabia526-maker.github.io/hemsirelikproje/");
+  document.getElementById("sonuc").innerHTML = sonucHTML;
 }
 </script>
 
